@@ -1,3 +1,0 @@
-@if ($generate-button-classes) {
-  @include btn-maker($rounded: true);
-}
