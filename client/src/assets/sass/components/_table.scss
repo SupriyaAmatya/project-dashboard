@@ -1,0 +1,30 @@
+.lf-table {
+  @include e(head-row) {
+    border-bottom: 1px solid getColor('grey.15');
+  }
+
+  @include e(row) {
+    border-bottom: 1px solid getColor('grey.15');
+    cursor       : pointer;
+
+    &:hover {
+      background: getColor('tertiary-blue.5');
+    }
+  }
+
+  @include e(col) {
+    padding: getSpacing('4x');
+    @include getFontSize('body1');
+    color: getColor('grey.80');
+
+    @include m(head) {
+      text-transform: uppercase;
+      text-align    : left;
+      text-transform: uppercase;
+      color         : rgba(0, 0, 0, .4);
+      padding       : getSpacing('4x');
+      font-weight   : getFontWeight('bold');
+      @include getFontSize('small');
+    }
+  }
+}
