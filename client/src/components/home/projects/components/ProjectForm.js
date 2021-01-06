@@ -116,8 +116,6 @@ const ProjectForm = (props) => {
                         }
                         return properties;
                       })
-                      console.log('TECHSTACK_VALUES => ',values.techStack_value);
-                      console.log('TECH => ',tech);
                       setFieldValue('techStacks', tech);
                       setFieldValue('techStack_value', techStack_value);
                       setFieldError('techStacks', '');

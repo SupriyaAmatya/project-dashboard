@@ -88,3 +88,16 @@ export async function findByEmail(user) {
 
   return result;
 }
+
+/**
+ * Find user by id.
+ *
+ * @param {String} userID
+ * 
+ * @returns {Promise}
+ */
+export async function fetchByUserId(userID) {
+  const result = await User.findById(userID).select('-password').select('-__v');
+console.log(result);
+  return result;
+}

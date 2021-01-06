@@ -16,6 +16,7 @@ export async function login(reqBody) {
   const user = await User.findOne({ email });
 
   if (!user) {
+    // res.status(400).json({msg: 'fucking error'})
     return {
       msg: 'User doesnot exist.'
     }
@@ -42,7 +43,7 @@ export async function login(reqBody) {
 
   return {
     user: {
-      id: user.id,
+      _id: user.id,
       name: user.name,
       email: user.email
     },

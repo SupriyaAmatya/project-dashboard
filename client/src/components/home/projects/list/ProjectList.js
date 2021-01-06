@@ -52,7 +52,12 @@ const ProjectList = () => {
   }
 
   useEffect(() => {
-    fetchProjects();
+    let unmounted = false;
+    if (!unmounted) fetchProjects();
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   return (

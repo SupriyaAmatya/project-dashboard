@@ -19,4 +19,9 @@ router.post('/signup', userController.registerUser);
  */
 router.get('/',authenticate, userController.getUsers);
 
+/**
+ * @route GET /api/users/current
+ */
+router.get('/current', userController.fetchCurrent);
+
 export default router;

@@ -14,7 +14,10 @@ export async function login(req, res, next) {
 
   try {
     const data = await authService.login(loginPayload);
-
+    console.log(data);
+    if(data.msg){
+      res.status(400).json(data);
+    }
     res.status(200).json(data);
   } catch (err) {
     next(err);

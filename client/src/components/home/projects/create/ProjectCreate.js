@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ProjectForm from '../components/ProjectForm';
 
 const ProjectCreate = () => {
@@ -12,7 +12,7 @@ const ProjectCreate = () => {
     endDate: '',
     techStacks:[],
   }
-  const [data, setData] = useState(initialState)
+
   return (
     <div className="cotent-wrap">
       <div className="container">
@@ -23,7 +23,7 @@ const ProjectCreate = () => {
               <h4 className="title-bar__title">Add Project</h4>
             </div>
           </div>
-          <ProjectForm data={data} />
+          <ProjectForm data={initialState} />
         </div>
       </div>
     </div>

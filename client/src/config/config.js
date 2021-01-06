@@ -1,11 +1,17 @@
 /**
  * Application wide configuration.
  */
-const baseURI = "http://localhost:8000/api";
 
 const config = {
-  baseURI: baseURI,
+  baseURI: process.env.REACT_APP_API_BASE_URI,
   endpoints: {
+    auth: {
+      login: '/auth/login'
+    },
+    users: {
+      all: '/users',
+      current: '/users/current'
+    },
     project: '/projects',
   },
 };

@@ -4,6 +4,10 @@ import './assets/sass/style.scss';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
+import init from './init';
+
+init();
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

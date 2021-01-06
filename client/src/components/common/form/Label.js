@@ -12,7 +12,7 @@ const Label = (name, required) => {
     <label className="lf-input__label">
       <span className="">{name} </span>
       {required ? (
-        <span className="text-bold color-danger-base">*</span>
+        <span className="text-bold color-tertiary-red-60">*</span>
       ) : (
         <span className="secondary-text"></span>
       )}
