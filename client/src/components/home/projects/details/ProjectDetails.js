@@ -1,13 +1,17 @@
 import { statusToColorMap } from 'maps/statusToColor';
 import React, { useState, useEffect } from 'react';
+import { FiArrowLeft } from 'vyaguta-icons/fi';
 
 import * as projectService from 'services/project';
 import * as routes from 'constants/routes';
 import history from 'utils/history';
+import * as toast from 'utils/toast';
 import ProjectStatus from '../components/ProjectStatus';
 import ProjectTech from '../components/ProjectTech';
 import ProjectInfoMain from './ProjectInfoMain';
 import { dateFormat } from 'utils/dateFormat';
+import Alert from 'components/common/alert';
+import Loader from 'components/common/loader/Loader';
 
 const ProjectDetails = (props) => {
   const { id } = props.match.params;
@@ -24,16 +28,32 @@ const ProjectDetails = (props) => {
     }
   }
 
-  const handleDelete = async () => {
-    try {
-      await projectService.removeProject(id);
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    Alert.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      preConfirm: async () => {
+        try {
+          await projectService.removeProject(id);
 
-      console.log('deteled');
-      history.push(routes.PROJECTS);
+          console.log('deteled');
+          toast.success({
+            title: 'Deleted!',
+            message: 'Project removed successfully.'
+          });
+          history.push(routes.PROJECTS);
 
-    } catch (err) {
-      console.log(err);
-    }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })
   }
 
   const redirectToEditPage = () => {
@@ -52,10 +72,12 @@ const ProjectDetails = (props) => {
     <div className="cotent-wrap">
       {!isLoading && projectDetails ?
         <div className="container">
-          <div className="title-bar mb-5x"></div>
-          <div className="card card--elevated">
+          <div className="card card--elevated mt-5x">
             <div className="title-bar__contents">
               <div className="title-bar__left">
+                <button className="btn btn--with-icon btn--outlined-grey mr-4x" onClick={() => history.goBack()}>
+                  <FiArrowLeft className="btn__icon btn__icon--left" /> Back
+                </button>
                 <h4 className="title-bar__title">{name}</h4>
               </div>
               <div className="title-bar__right">
@@ -87,7 +109,7 @@ const ProjectDetails = (props) => {
             </div>
           </div>
         </div>
-        : <p>Loading...</p>
+        : <Loader />
       }
     </div>
   );

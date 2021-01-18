@@ -8,8 +8,10 @@ import DateSelector from 'components/common/form/DateSelector';
 import ProjectSchema from 'schemas/ProjectSchema';
 import * as projectService from 'services/project';
 import history from 'utils/history';
+import * as toast from 'utils/toast';
 import * as routes from 'constants/routes';
 import CreatableMulti from 'components/common/form/CreatableSelect';
+import Alert from 'components/common/alert';
 
 const ProjectForm = (props) => {
   const { data, id } = props;
@@ -29,16 +31,44 @@ const ProjectForm = (props) => {
 
   const handleFormSubmit = async values => {
     try {
-      if(id){
+      if (id) {
         await projectService.updateProject(values);
+        toast.success({
+          title: 'Updated',
+          message: 'Project updated successfully.'
+        })
         history.goBack();
-      }else{
+      } else {
         await projectService.addProject(values);
+        toast.success({
+          title: 'Success',
+          message: 'Project added successfully.'
+        })
         history.push(routes.PROJECTS);
       }
     } catch (err) {
       console.log(err);
+      toast.error({
+        title: 'Error',
+        message: err.response.data.message,
+      });
     }
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    Alert.fire({
+      icon: 'warning',
+      title: 'Cancel this Data',
+      text: "You won't be able to revert this",
+      showCancelButton: false,
+      confirmButtonText: 'Yes, Cancel it',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      preConfirm: async () => {
+        history.push(routes.PROJECTS);
+      }
+    })
   }
 
   return (
@@ -106,7 +136,7 @@ const ProjectForm = (props) => {
                     value={values.techStack_value}
                     label="Technology Stacks"
                     handleChange={e => {
-                      let tech = e && e.map(tech => { 
+                      let tech = e && e.map(tech => {
                         return tech.target.value;
                       })
                       let techStack_value = e && e.map(tech => {
@@ -182,11 +212,18 @@ const ProjectForm = (props) => {
                   />
                 </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn--blue"
-                disabled={!dirty || isSubmitting}
-              >{id ? 'Update' : 'Create Project'}</button>
+              <div className="d-flex">
+                <button
+                  type="submit"
+                  className="btn btn--blue"
+                  disabled={!dirty || isSubmitting}
+                >{id ? 'Update' : 'Create Project'}</button>
+                <button
+                  type="button"
+                  className="btn btn--red ml-4x"
+                  onClick={handleCancel}
+                >Cancel</button>
+              </div>
             </form>
           </div>
         );

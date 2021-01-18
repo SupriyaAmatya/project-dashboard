@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
 import { logo } from 'assets/images';
 import * as routes from 'constants/routes'
@@ -7,6 +8,7 @@ import * as authService from 'services/auth';
 import UserContext from 'context/UserContext';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
   
   const logout = () => {
@@ -36,9 +38,15 @@ const Header = () => {
             </div>
           </div>
           <div className="navbar__right">
-            <div className="nav__node">
-              <p>Welcome, <strong>{userData.user.name && userData.user.name}</strong></p>
-              <button onClick={logout}>Logout</button>
+            <div className="media media--small navbar__right-logout">
+              <div className="text-bold" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {userData.user.name && userData.user.name}
+              </div>
+              <div className={classnames('dropmenu', { show: isMenuOpen })}>
+                <div className="dropmenu__node">
+                  <a href="!#" onClick={logout}>Logout</a>
+                </div>
+                </div>
             </div>
           </div>
         </div>

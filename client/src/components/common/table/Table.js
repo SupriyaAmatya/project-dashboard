@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useTable, useFlexLayout } from 'react-table';
+import Loader from '../loader/Loader';
 
-const Table = ({ columns, data, onRowClick }) => {
+const Table = ({ columns, data, onRowClick, isLoading }) => {
   const getStyles = (props, align = 'left') => [
     props,
     {
@@ -53,7 +54,7 @@ const Table = ({ columns, data, onRowClick }) => {
           </div>
         ))}
         <div className="lf-table__body">
-          {rows.map(row => {
+          {!isLoading ? rows.map(row => {
             prepareRow(row);
             return (
               <div
@@ -72,7 +73,7 @@ const Table = ({ columns, data, onRowClick }) => {
                 })}
               </div>
             );
-          })}
+          }) : <Loader />}
         </div>
       </div>
     </div>

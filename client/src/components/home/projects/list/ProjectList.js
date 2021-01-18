@@ -9,6 +9,7 @@ import { dateFormat } from 'utils/dateFormat';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const columns = [
     {
@@ -49,6 +50,7 @@ const ProjectList = () => {
   const fetchProjects = async () => {
     const data = await projectService.fetchAllProjects();
     setProjects(data.data);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const ProjectList = () => {
       </div>
       <div className="container">
         <div className="full-scope-card__content mt-5x">
-          <Table columns={columns} data={projects} onRowClick={redirectToDetailsPage} />
+          <Table columns={columns} data={projects} onRowClick={redirectToDetailsPage} isLoading={isLoading}/>
         </div>
       </div>
     </div>

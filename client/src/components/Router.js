@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Router as BrowserRouter, Switch } from 'react-router-dom';
+import { Router as BrowserRouter, Switch, Redirect } from 'react-router-dom';
 
 import * as routes from '../constants/routes';
 import history from '../utils/history';
@@ -46,8 +46,9 @@ const Router = () => {
         <Switch>
           <CommonRoute path={routes.LOGIN} component={Login} />
           <PrivateRoute path={routes.HOME} component={Home} />
-          <CommonRoute path="*" component={Login} />
+          {/* <CommonRoute path="*" component={Login} /> */}
           {/* <Route path={routes.HOME} component={Home} /> */}
+          <Redirect to={routes.HOME} />
         </Switch>
       </UserContext.Provider>
     </BrowserRouter>

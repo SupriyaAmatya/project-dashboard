@@ -27,6 +27,7 @@
   }
 
   @include e(right-logout) {
+    cursor: pointer;
     position: relative;
   }
 }
